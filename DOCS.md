@@ -70,6 +70,11 @@ will get you color "#8888cc" of type `string`
 
 # Developing apps
 
-You should check out whole [Window](#window-structure) section and write single(or I dont know, maybe multiple)-file program that imports `Window` type and does its business and put it in `apps/`, then register should find it and make available from context menu
+You should check out whole [Window](#window-structure) 
+section and write single (or I don't know, maybe multiple)
+-file program that imports `Window` 
+type and does its business and put it in `apps/`, 
+then register should find it and make available 
+from context menu.
 
 

@@ -7,6 +7,8 @@ import (
 	"syscall/js"
 )
 
+// Logging
+// Switching verbose mode and informates about in Console.
 func Logging(this js.Value, args []js.Value) interface{} {
 	wm.Verbose = !wm.Verbose
 	if wm.Verbose {
@@ -17,33 +19,35 @@ func Logging(this js.Value, args []js.Value) interface{} {
 	return nil
 }
 
+// LaunchDefault
+// Callback for window-manager. Settings up perferences by default :D
 func LaunchDefault(this js.Value, args []js.Value) interface{} {
 	if len(args) != 1 {
-		return "Expected one integer (window id)" // No or too many args
+		// Arguments count more or less than one. (expected WID)
+		return "Expected WID only!"
 	}
 	jsNum := args[0] // Get the js.Value argument
 
 	if jsNum.Type() != js.TypeNumber { // Check if it's a number
-		return "Argument must be a number"
+		return "Argument must be a uint32"
 	}
 	num := jsNum.Int() // Convert js.Value to Go int
 
 	fetchedWindow, ok := wm.AllWindows[strconv.Itoa(num)]
 	if !ok {
-		// Im really not okay (trust me)
+		// I'm really not okay (trust me)
 		if wm.Verbose {
-			wm.Print("Couldn't start APP_default on window " + strconv.Itoa(num))
+			wm.Print("Couldn't start AppDefault on window " + strconv.Itoa(num))
 		}
 		return nil
 	}
-	apps.APP_default(fetchedWindow)
+	apps.AppDefault(fetchedWindow)
 	return nil
 }
 
 func main() {
-	c := make(chan struct{}, 0)
+	c := make(chan struct{})
 
-	// Print an introductory message to the browser console.
 	wm.Print(`
 Great, You've found yourself in the console
 Then you are likely to want to know this:

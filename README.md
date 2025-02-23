@@ -7,15 +7,18 @@ hardly inspired by Plan 9's [Rio](https://9p.io/wiki/plan9/using_rio/index.html)
 
 ![Preview](screenshot.webp)
 
+### [My](https://github.com/AlexeyTolstopyatov) notes
+My way is to clean it up and rebuild it using recommendations and design patterns, 
+not only from practice and developing my skills, 
+but also from considerations of trying to 
+make this project a little better to understand and use.
+
 ## How it works
 
 It uses [syscall/js](https://pkg.go.dev/syscall/js) to manipulate DOM and mimic rio
-
-Windows are \<div\>s with html inside
-
-Credits to Go team for their [Go fonts](https://go.dev/blog/go-fonts)
-
-Try it here: [deployment](https://ninefid.uk.to/riwo)
+Windows are \<div\>s with html inside.
+Credits to Go team for their [Go fonts](https://go.dev/blog/go-fonts).
+Try it here: [deployment](https://ninefid.uk.to/riwo).
 
 ## Roadmap
 ### Actions
@@ -37,4 +40,5 @@ SVG cursors may be junky
 
 If mode was interrupted without mouseup things may brake (I really dont want to fix this)
 
-Apps or their processes may remain alive (this should be fixed by checking if underlying window isn't nil but idk)
+Apps or their processes may remain alive 
+(this should be fixed by checking if underlying window isn't nil but idk)
