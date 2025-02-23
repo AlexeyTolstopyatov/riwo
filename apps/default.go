@@ -12,6 +12,8 @@ var (
 	colorMG    string = wm.GetColor[themeColor]["normal"]
 )
 
+// init
+// Entry point of application.
 func init() {
 	// Register the default app itself.
 	AppRegistry["Default"] = AppDefault

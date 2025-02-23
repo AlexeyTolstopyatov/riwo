@@ -3,6 +3,9 @@
 # Enable PowerShell scripts invoking in Settings for run it
 # from any ConHost instance
 #
+# Now the binary stores in riwo/statis/build because
+# all static pages and web elements must store in static catalog
+#
 
 $ProjectPath = Get-Location
 $OutputPath = "$(Get-Location)\static\build\main.wasm"

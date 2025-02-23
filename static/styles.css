@@ -8,6 +8,6 @@ body {
     position: absolute;
     background: #777777;
     z-index: 0;
-    cursor: url(static/assets/cursor.svg), auto;
+    cursor: url(assets/cursor.svg), auto;
     font-family: 'Go', sans-serif;
 }

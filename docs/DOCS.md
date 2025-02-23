@@ -1,5 +1,5 @@
+# Documents
 This was done primary for me to navigate in my shit
-
 To be done
 
 # How exactly does it work?
@@ -21,15 +21,12 @@ type Window struct {
 }
 ```
 
-ID is window id (how sudden)
-
-Element is what it looks like as a html object (not what inside, whole window)
-
+ID is window identificator.
+Element is what it looks like as a html object (not what inside, whole window).
 So you only should utilize innerHTML
 
 ## Handle exiting
-
-If ParticularWindow.ID gets `-1` then it was deleted and app should stop
+If ParticularWindow.ID gets `-1` then it was deleted and app should stop.
 
 ## Assigning Context Menu to a window
 
@@ -42,18 +39,15 @@ customEntries = map[string]js.Value
 customEntries["MyEntry"] = ParticularCallback(ParticularWindow)
 
 ParticularWindow.ContextEntries = customEntries
-
 ```
 
 ## Accessing Standard Colors
-
-Standard colors (those that are in readme) are available in `riwo/wm` as `GetColor` nested map variable:
-
+Standard colors (those that are in readme) are available in
+`riwo/wm` as `GetColor` nested map variable:
 ```
 color string = GetColor["aqua"]["vivid"]
 ```
-
-will get you color "#8888cc" of type `string`
+It will get you color "#8888cc" of type `string`
 
 ### All Colors:
 - monochrome
@@ -69,6 +63,8 @@ will get you color "#8888cc" of type `string`
 - vivid
 
 # Developing apps
+I'll write Calling convention in another document later. 
+It needs to clean, filter, and restrict to be "ok..." manual for others.
 
 You should check out whole [Window](#window-structure) 
 section and write single (or I don't know, maybe multiple)
