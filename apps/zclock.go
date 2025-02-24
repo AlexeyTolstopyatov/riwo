@@ -1,7 +1,8 @@
 package apps
 
 import (
-	"riwo/wm"
+	"riwo/internal/controls"
+	wm2 "riwo/internal/wm"
 	"strconv"
 	"syscall/js"
 )
@@ -15,7 +16,7 @@ var (
 	currentTheme string = "aqua"
 )
 
-func AppZclock(window *wm.Window) {
+func AppZclock(window *controls.Window) {
 	document := js.Global().Get("document")
 	isSettings = false
 
@@ -26,12 +27,12 @@ func AppZclock(window *wm.Window) {
 	container.Get("style").Set("flexDirection", "column")
 	container.Get("style").Set("justifyContent", "center")
 	container.Get("style").Set("alignItems", "center")
-	container.Get("style").Set("backgroundColor", wm.GetColor["aqua"]["faded"])
+	container.Get("style").Set("backgroundColor", wm2.GetColor["aqua"]["faded"])
 
 	// Create clock display
 	clockDisplay := document.Call("createElement", "div")
 	clockDisplay.Get("style").Set("fontSize", "4em")
-	clockDisplay.Get("style").Set("color", wm.GetColor["aqua"]["vivid"])
+	clockDisplay.Get("style").Set("color", wm2.GetColor["aqua"]["vivid"])
 
 	// Settings container with simplified styling
 	settingsContainer := document.Call("createElement", "div")
@@ -44,7 +45,7 @@ func AppZclock(window *wm.Window) {
 	settingsTitle.Set("textContent", "Clock Settings")
 	settingsTitle.Get("style").Set("fontSize", "1.5em")
 	settingsTitle.Get("style").Set("marginBottom", "15px")
-	settingsTitle.Get("style").Set("color", wm.GetColor["aqua"]["vivid"])
+	settingsTitle.Get("style").Set("color", wm2.GetColor["aqua"]["vivid"])
 
 	// UTC adjustment section
 	utcSection := document.Call("createElement", "div")
@@ -71,9 +72,9 @@ func AppZclock(window *wm.Window) {
 	styleUtcButton := func(btn js.Value, theme string) {
 		btn.Get("style").Set("cursor", "url(assets/cursor-inverted.svg), auto")
 		btn.Get("style").Set("padding", "10px 20px")
-		btn.Get("style").Set("backgroundColor", wm.GetColor[theme]["faded"])
+		btn.Get("style").Set("backgroundColor", wm2.GetColor[theme]["faded"])
 		btn.Get("style").Set("color", "black")
-		btn.Get("style").Set("border", "solid "+wm.GetColor[theme]["vivid"])
+		btn.Get("style").Set("border", "solid "+wm2.GetColor[theme]["vivid"])
 		btn.Get("style").Set("borderRadius", "0")
 	}
 
@@ -109,27 +110,27 @@ func AppZclock(window *wm.Window) {
 		themeBtn.Get("style").Set("padding", "10px")
 		themeBtn.Get("style").Set("textAlign", "center")
 		themeBtn.Get("style").Set("cursor", "url(assets/cursor-inverted.svg), auto")
-		themeBtn.Get("style").Set("backgroundColor", wm.GetColor[theme]["faded"])
+		themeBtn.Get("style").Set("backgroundColor", wm2.GetColor[theme]["faded"])
 		themeBtn.Get("style").Set("color", "black")
-		themeBtn.Get("style").Set("border", "solid "+wm.GetColor[theme]["vivid"])
+		themeBtn.Get("style").Set("border", "solid "+wm2.GetColor[theme]["vivid"])
 		themeBtn.Get("style").Set("borderRadius", "0")
 		themeBtn.Set("textContent", theme)
 
 		// Theme selection handler
 		themeBtn.Call("addEventListener", "mouseover", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-			themeBtn.Get("style").Set("backgroundColor", wm.GetColor[theme]["normal"])
+			themeBtn.Get("style").Set("backgroundColor", wm2.GetColor[theme]["normal"])
 			return nil
 		}))
 		themeBtn.Call("addEventListener", "mouseout", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-			themeBtn.Get("style").Set("backgroundColor", wm.GetColor[theme]["faded"])
+			themeBtn.Get("style").Set("backgroundColor", wm2.GetColor[theme]["faded"])
 			return nil
 		}))
 		themeBtn.Call("addEventListener", "mousedown", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 			newTheme := this.Get("textContent").String()
 			currentTheme = newTheme
-			container.Get("style").Set("backgroundColor", wm.GetColor[newTheme]["faded"])
-			clockDisplay.Get("style").Set("color", wm.GetColor[newTheme]["vivid"])
-			settingsTitle.Get("style").Set("color", wm.GetColor[newTheme]["vivid"])
+			container.Get("style").Set("backgroundColor", wm2.GetColor[newTheme]["faded"])
+			clockDisplay.Get("style").Set("color", wm2.GetColor[newTheme]["vivid"])
+			settingsTitle.Get("style").Set("color", wm2.GetColor[newTheme]["vivid"])
 			// Update UTC buttons style
 			styleUtcButton(utcDecrease, newTheme)
 			styleUtcButton(utcIncrease, newTheme)
@@ -141,11 +142,11 @@ func AppZclock(window *wm.Window) {
 
 	// UTC button handlers
 	utcDecrease.Call("addEventListener", "mouseover", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		utcDecrease.Get("style").Set("backgroundColor", wm.GetColor[currentTheme]["normal"])
+		utcDecrease.Get("style").Set("backgroundColor", wm2.GetColor[currentTheme]["normal"])
 		return nil
 	}))
 	utcDecrease.Call("addEventListener", "mouseout", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		utcDecrease.Get("style").Set("backgroundColor", wm.GetColor[currentTheme]["faded"])
+		utcDecrease.Get("style").Set("backgroundColor", wm2.GetColor[currentTheme]["faded"])
 		return nil
 	}))
 	utcDecrease.Call("addEventListener", "mousedown", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
@@ -157,11 +158,11 @@ func AppZclock(window *wm.Window) {
 	}))
 
 	utcIncrease.Call("addEventListener", "mouseover", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		utcIncrease.Get("style").Set("backgroundColor", wm.GetColor[currentTheme]["normal"])
+		utcIncrease.Get("style").Set("backgroundColor", wm2.GetColor[currentTheme]["normal"])
 		return nil
 	}))
 	utcIncrease.Call("addEventListener", "mouseout", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		utcIncrease.Get("style").Set("backgroundColor", wm.GetColor[currentTheme]["faded"])
+		utcIncrease.Get("style").Set("backgroundColor", wm2.GetColor[currentTheme]["faded"])
 		return nil
 	}))
 	utcIncrease.Call("addEventListener", "mousedown", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
@@ -216,7 +217,7 @@ func AppZclock(window *wm.Window) {
 	})
 
 	// Add settings toggle to window context menu
-	window.ContextEntries = []wm.ContextEntry{
+	window.ContextEntries = []window.ContextEntry{
 		{
 			Name: "Settings",
 			Callback: func() {
@@ -228,8 +229,8 @@ func AppZclock(window *wm.Window) {
 					settingsContainer.Get("style").Set("display", "none")
 					clockDisplay.Get("style").Set("display", "block")
 				}
-				if wm.Verbose {
-					wm.Print("zclock settings toggled: " + strconv.FormatBool(isSettings))
+				if wm2.Verbose {
+					wm2.Print("zclock settings toggled: " + strconv.FormatBool(isSettings))
 				}
 			},
 		},

@@ -1,14 +1,17 @@
 /*
-Global vars for WM
-and common utils
-*/
+ * Global vars for WM
+ * and common utils
+ */
 
 package wm
 
 import (
+	"riwo/internal/controls"
 	"strconv"
 	"syscall/js"
 )
+
+// bad idea. Needs to be more structurised.
 
 var (
 	ContextMenu      js.Value
@@ -21,15 +24,24 @@ var (
 	IsDeleteMode     bool
 	IsNewMode        bool
 	IsHiding         bool
-	StartX, StartY   float64
-	CurrentWindow    *Window            // Active Go Window
-	ActiveWindow     js.Value           // Active JS window
-	AllWindows       map[string]*Window // All Go Windows
+	StartY           float64
+	StartX           float64
+	Window           *controls.Window            // Active Window structure
+	JsWindow         js.Value                    // Active JS window structure
+	AllWindows       map[string]*controls.Window // All Go Windows
 	GhostWindow      js.Value
-	WindowCount      int       // Counter for creating multiple windows with unique z-index
-	HighestZIndex    int  = 10 // Track the highest z-index for bringing windows to front
-	Verbose          bool = false
-	GetColor              = map[string]map[string]string{
+	// WindowCount
+	// Counter for creating multiple windows with unique z-index
+	WindowCount int
+	// HighestZIndex
+	// Track the highest z-index for bringing windows to front
+	HighestZIndex int = 10
+	// Verbose
+	// holds flag of logger usage.
+	Verbose bool = false
+	// GetColor
+	// [need to] move to CSS, parse it once.
+	GetColor = map[string]map[string]string{
 		"monochrome": {
 			"faded":  "#ffffff",
 			"normal": "#777777",

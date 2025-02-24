@@ -2,19 +2,22 @@ package main
 
 import (
 	"riwo/apps"
-	"riwo/wm"
+	"riwo/internal/controls"
+	"riwo/internal/wm"
+	"riwo/internal/wm/events"
+	"riwo/internal/wm/menu/context_menu"
 	"strconv"
 	"syscall/js"
 )
 
-// Logging
+// SwitchLogging
 // Switching verbose mode and informates about in Console.
-func Logging(this js.Value, args []js.Value) interface{} {
+func SwitchLogging(this js.Value, args []js.Value) interface{} {
 	wm.Verbose = !wm.Verbose
 	if wm.Verbose {
-		wm.Print("Logging is now ON")
+		wm.Print("Logger enabled")
 	} else {
-		wm.Print("Logging is now OFF")
+		wm.Print("Logger disabled")
 	}
 	return nil
 }
@@ -59,13 +62,13 @@ Then you are likely to want to know this:
 - Select state wants RMB click ("Delete", "Resize")
   or hold ("Move") on desired window
 For logging there are:
-+ Logging()
++ SwitchLogging()
 `)
 
-	// Logging toggler
-	js.Global().Set("Logging", js.FuncOf(Logging))
+	// SwitchLogging toggler
+	js.Global().Set("SwitchLogging", js.FuncOf(SwitchLogging))
 
-	wm.AllWindows = make(map[string]*wm.Window)
+	wm.AllWindows = make(map[string]*controls.Window)
 	wm.ContextMenuHides = make([]js.Value, 0)
 
 	// Set default app for window
@@ -73,8 +76,8 @@ For logging there are:
 	// Essential for context menu's "New"
 
 	// Window manager core
-	wm.InitializeContextMenu()
-	wm.InitializeGlobalMouseEvents()
+	context_menu.New()
+	events.New()
 
 	<-c
 }

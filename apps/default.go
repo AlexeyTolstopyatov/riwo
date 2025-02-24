@@ -1,15 +1,16 @@
 package apps
 
 import (
-	"riwo/wm"
+	"riwo/internal/controls"
+	wm2 "riwo/internal/wm"
 	"syscall/js"
 )
 
 var (
 	themeColor string = "green"
-	colorFG    string = wm.GetColor[themeColor]["vivid"]
-	colorBG    string = wm.GetColor[themeColor]["faded"]
-	colorMG    string = wm.GetColor[themeColor]["normal"]
+	colorFG    string = wm2.GetColor[themeColor]["vivid"]
+	colorBG    string = wm2.GetColor[themeColor]["faded"]
+	colorMG    string = wm2.GetColor[themeColor]["normal"]
 )
 
 // init
@@ -19,7 +20,7 @@ func init() {
 	AppRegistry["Default"] = AppDefault
 }
 
-func AppDefault(window *wm.Window) {
+func AppDefault(window *controls.Window) {
 	document := js.Global().Get("document")
 
 	// Create a container div for the grid
@@ -75,8 +76,8 @@ func AppDefault(window *wm.Window) {
 
 		// Click handler
 		btn.Call("addEventListener", "mousedown", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-			if wm.Verbose {
-				wm.Print("App " + appName + " selected")
+			if wm2.Verbose {
+				wm2.Print("App " + appName + " selected")
 			}
 			appFunc(window)
 			return nil
