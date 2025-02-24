@@ -16,10 +16,4 @@ Write-Host "building..."
 
 go build -o $OutputPath "$($ProjectPath)\cmd\main.go"
 
-if ($?) {
-    Write-Host "success!"
-    Write-Host "check it: $($OutputPath)"
-} else {
-    Write-Host "fail: $($?)"
-    exit 1
-}
+Write-Host "operation completed? $($?)"

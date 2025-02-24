@@ -6,7 +6,6 @@ package window
 //
 
 import (
-	"riwo/internal/controls"
 	"riwo/internal/wm"
 	"riwo/internal/wm/menu/context_menu"
 	"strconv"
@@ -16,7 +15,7 @@ import (
 // New
 // NewWindow creates a new Window,
 // sets up its DOM element, and returns a pointer to it.
-func New(x, y, width, height, content string) *controls.Window {
+func New(x, y, width, height, content string) *Window {
 	wm.WindowCount++
 	id := wm.WindowCount
 
@@ -40,7 +39,7 @@ func New(x, y, width, height, content string) *controls.Window {
 			strconv.Itoa(id) + "\"")
 	}
 
-	neuwindow := &controls.Window{
+	neuwindow := &Window{
 		ID:      id,
 		Element: winElem,
 		// No custom ContextEntries
@@ -171,7 +170,7 @@ func New(x, y, width, height, content string) *controls.Window {
 // Move
 // Sets pos and dimensions for the window.
 // (Actually useless). {So, then f___ you}.
-func (w *controls.Window) Move(newX, newY, newWidth, newHeight string) {
+func (w *Window) Move(newX, newY, newWidth, newHeight string) {
 	w.Element.Get("style").Set("left", newX)
 	w.Element.Get("style").Set("top", newY)
 	w.Element.Get("style").Set("width", newWidth)
@@ -180,8 +179,7 @@ func (w *controls.Window) Move(newX, newY, newWidth, newHeight string) {
 
 // Delete
 // Deletes the window from DOM and Go.
-func Delete(wnd *controls.Window) {
-	// huh... C++ в жопе заиграл.
+func Delete(wnd *Window) {
 	wnd.ID = -1
 	wnd.Element.Call("remove")
 	delete(wm.AllWindows, strconv.Itoa(wnd.ID))

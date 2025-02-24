@@ -6,7 +6,7 @@
 package wm
 
 import (
-	"riwo/internal/controls"
+	"riwo/internal/wm/window"
 	"strconv"
 	"syscall/js"
 )
@@ -16,20 +16,10 @@ import (
 var (
 	ContextMenu      js.Value
 	ContextMenuHides []js.Value
-	IsDragging       bool
-	IsMovingMode     bool
-	IsResizingMode   bool
-	IsResizingInit   bool
-	JustSelected     bool
-	IsDeleteMode     bool
-	IsNewMode        bool
-	IsHiding         bool
 	StartY           float64
 	StartX           float64
-	Window           *controls.Window            // Active Window structure
-	JsWindow         js.Value                    // Active JS window structure
-	AllWindows       map[string]*controls.Window // All Go Windows
-	GhostWindow      js.Value
+	AllWindows       map[string]*window.Window // All Go Windows
+
 	// WindowCount
 	// Counter for creating multiple windows with unique z-index
 	WindowCount int
@@ -39,9 +29,9 @@ var (
 	// Verbose
 	// holds flag of logger usage.
 	Verbose bool = false
-	// GetColor
-	// [need to] move to CSS, parse it once.
-	GetColor = map[string]map[string]string{
+	// ColorSchemes
+	// Represents loaded color schemes
+	ColorSchemes = map[string]map[string]string{
 		"monochrome": {
 			"faded":  "#ffffff",
 			"normal": "#777777",

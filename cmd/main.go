@@ -32,7 +32,7 @@ func LaunchDefault(this js.Value, args []js.Value) interface{} {
 	jsNum := args[0] // Get the js.Value argument
 
 	if jsNum.Type() != js.TypeNumber { // Check if it's a number
-		return "Argument must be a uint32"
+		return "Argument must be a [uint32]"
 	}
 	num := jsNum.Int() // Convert js.Value to Go int
 

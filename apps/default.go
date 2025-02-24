@@ -8,9 +8,9 @@ import (
 
 var (
 	themeColor string = "green"
-	colorFG    string = wm2.GetColor[themeColor]["vivid"]
-	colorBG    string = wm2.GetColor[themeColor]["faded"]
-	colorMG    string = wm2.GetColor[themeColor]["normal"]
+	colorFG    string = wm2.ColorSchemes[themeColor]["vivid"]
+	colorBG    string = wm2.ColorSchemes[themeColor]["faded"]
+	colorMG    string = wm2.ColorSchemes[themeColor]["normal"]
 )
 
 // init
