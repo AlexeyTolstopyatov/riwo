@@ -2,55 +2,48 @@ package main
 
 import (
 	"riwo/apps"
-	"riwo/internal/controls"
-	"riwo/internal/wm"
-	"riwo/internal/wm/events"
-	"riwo/internal/wm/menu/context_menu"
+	"riwo/wm"
 	"strconv"
 	"syscall/js"
 )
 
-// SwitchLogging
-// Switching verbose mode and informates about in Console.
-func SwitchLogging(this js.Value, args []js.Value) interface{} {
+func Logging(this js.Value, args []js.Value) interface{} {
 	wm.Verbose = !wm.Verbose
 	if wm.Verbose {
-		wm.Print("Logger enabled")
+		wm.Print("Logging is now ON")
 	} else {
-		wm.Print("Logger disabled")
+		wm.Print("Logging is now OFF")
 	}
 	return nil
 }
 
-// LaunchDefault
-// Callback for window-manager. Settings up perferences by default :D
 func LaunchDefault(this js.Value, args []js.Value) interface{} {
 	if len(args) != 1 {
-		// Arguments count more or less than one. (expected WID)
-		return "Expected WID only!"
+		return "Expected one integer (window id)" // No or too many args
 	}
 	jsNum := args[0] // Get the js.Value argument
 
 	if jsNum.Type() != js.TypeNumber { // Check if it's a number
-		return "Argument must be a [uint32]"
+		return "Argument must be a number"
 	}
 	num := jsNum.Int() // Convert js.Value to Go int
 
 	fetchedWindow, ok := wm.AllWindows[strconv.Itoa(num)]
 	if !ok {
-		// I'm really not okay (trust me)
+		// Im really not okay (trust me)
 		if wm.Verbose {
-			wm.Print("Couldn't start AppDefault on window " + strconv.Itoa(num))
+			wm.Print("Couldn't start APP_default on window " + strconv.Itoa(num))
 		}
 		return nil
 	}
-	apps.AppDefault(fetchedWindow)
+	apps.APP_default(fetchedWindow)
 	return nil
 }
 
 func main() {
-	c := make(chan struct{})
+	c := make(chan struct{}, 0)
 
+	// Print an introductory message to the browser console.
 	wm.Print(`
 Great, You've found yourself in the console
 Then you are likely to want to know this:
@@ -62,13 +55,13 @@ Then you are likely to want to know this:
 - Select state wants RMB click ("Delete", "Resize")
   or hold ("Move") on desired window
 For logging there are:
-+ SwitchLogging()
++ Logging()
 `)
 
-	// SwitchLogging toggler
-	js.Global().Set("SwitchLogging", js.FuncOf(SwitchLogging))
+	// Logging toggler
+	js.Global().Set("Logging", js.FuncOf(Logging))
 
-	wm.AllWindows = make(map[string]*controls.Window)
+	wm.AllWindows = make(map[string]*wm.Window)
 	wm.ContextMenuHides = make([]js.Value, 0)
 
 	// Set default app for window
@@ -76,8 +69,8 @@ For logging there are:
 	// Essential for context menu's "New"
 
 	// Window manager core
-	context_menu.New()
-	events.New()
+	wm.InitializeContextMenu()
+	wm.InitializeGlobalMouseEvents()
 
 	<-c
 }

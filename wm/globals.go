@@ -1,37 +1,35 @@
 /*
- * Global vars for WM
- * and common utils
- */
+Global vars for WM
+and common utils
+*/
 
 package wm
 
 import (
-	"riwo/internal/wm/window"
 	"strconv"
 	"syscall/js"
 )
 
-// bad idea. Needs to be more structurised.
-
 var (
 	ContextMenu      js.Value
 	ContextMenuHides []js.Value
-	StartY           float64
-	StartX           float64
-	AllWindows       map[string]*window.Window // All Go Windows
-
-	// WindowCount
-	// Counter for creating multiple windows with unique z-index
-	WindowCount int
-	// HighestZIndex
-	// Track the highest z-index for bringing windows to front
-	HighestZIndex int = 10
-	// Verbose
-	// holds flag of logger usage.
-	Verbose bool = false
-	// ColorSchemes
-	// Represents loaded color schemes
-	ColorSchemes = map[string]map[string]string{
+	IsDragging       bool
+	IsMovingMode     bool
+	IsResizingMode   bool
+	IsResizingInit   bool
+	JustSelected     bool
+	IsDeleteMode     bool
+	IsNewMode        bool
+	IsHiding         bool
+	StartX, StartY   float64
+	CurrentWindow    *Window            // Active Go Window
+	ActiveWindow     js.Value           // Active JS window
+	AllWindows       map[string]*Window // All Go Windows
+	GhostWindow      js.Value
+	WindowCount      int       // Counter for creating multiple windows with unique z-index
+	HighestZIndex    int  = 10 // Track the highest z-index for bringing windows to front
+	Verbose          bool = false
+	GetColor              = map[string]map[string]string{
 		"monochrome": {
 			"faded":  "#ffffff",
 			"normal": "#777777",
