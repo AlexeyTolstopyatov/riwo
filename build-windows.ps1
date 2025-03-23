@@ -8,7 +8,7 @@
 #
 
 $ProjectPath = Get-Location
-$OutputPath = "$(Get-Location)\static\build\main.wasm"
+$OutputPath = "$(Get-Location)\build\main.wasm"
 Set-Location $ProjectPath
 $Env:GOOS = "js"
 $Env:GOARCH = "wasm"

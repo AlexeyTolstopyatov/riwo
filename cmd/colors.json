@@ -1,0 +1,37 @@
+{
+  "monochrome": {
+    "normal": "#777777",
+    "faded": "#ffffff",
+    "vivid": "#000000"
+  },
+  "red": {
+    "faded": "#ffeaea",
+    "normal": "#df9595",
+    "vivid": "#bb5d5d"
+  },
+  "green": {
+    "faded": "#eaffea",
+    "normal": "#88cc88",
+    "vivid": "#448844"
+  },
+  "blue": {
+    "faded": "#c0eaff",
+    "normal": "#00aaff",
+    "vivid": "#0088cc"
+  },
+  "yellow": {
+    "faded": "#ffffea",
+    "normal": "#eeee9e",
+    "vivid": "#99994c"
+  },
+  "aqua": {
+    "faded": "#eaffff",
+    "normal": "#9eeeee",
+    "vivid": "#8888cc"
+  },
+  "gray": {
+    "faded": "#eeeeee",
+    "normal": "#cccccc",
+    "vivid": "#888888"
+  }
+}

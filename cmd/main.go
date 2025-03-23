@@ -1,18 +1,18 @@
 package main
 
 import (
-	"riwo/apps"
-	"riwo/wm"
+	"riwo/apps/mwnd"
+	wm2 "riwo/pkg/wm"
 	"strconv"
 	"syscall/js"
 )
 
 func Logging(this js.Value, args []js.Value) interface{} {
-	wm.Verbose = !wm.Verbose
-	if wm.Verbose {
-		wm.Print("Logging is now ON")
+	wm2.Verbose = !wm2.Verbose
+	if wm2.Verbose {
+		wm2.Print("Logging is now ON")
 	} else {
-		wm.Print("Logging is now OFF")
+		wm2.Print("Logging is now OFF")
 	}
 	return nil
 }
@@ -28,23 +28,24 @@ func LaunchDefault(this js.Value, args []js.Value) interface{} {
 	}
 	num := jsNum.Int() // Convert js.Value to Go int
 
-	fetchedWindow, ok := wm.AllWindows[strconv.Itoa(num)]
+	fetchedWindow, ok := wm2.AllWindows[strconv.Itoa(num)]
 	if !ok {
 		// Im really not okay (trust me)
-		if wm.Verbose {
-			wm.Print("Couldn't start APP_default on window " + strconv.Itoa(num))
+		if wm2.Verbose {
+			wm2.Print("Couldn't start AppDefault on window " + strconv.Itoa(num))
 		}
 		return nil
 	}
-	apps.APP_default(fetchedWindow)
+	//apps.AppDefault(fetchedWindow) // SOLID fuck you
+	mwnd.AppMyWindow(fetchedWindow)
 	return nil
 }
 
 func main() {
-	c := make(chan struct{}, 0)
+	c := make(chan struct{})
 
 	// Print an introductory message to the browser console.
-	wm.Print(`
+	wm2.Print(`
 Great, You've found yourself in the console
 Then you are likely to want to know this:
 - Click LMB to cancel any action
@@ -58,19 +59,19 @@ For logging there are:
 + Logging()
 `)
 
-	// Logging toggler
+	// Logging toggle
 	js.Global().Set("Logging", js.FuncOf(Logging))
 
-	wm.AllWindows = make(map[string]*wm.Window)
-	wm.ContextMenuHides = make([]js.Value, 0)
+	wm2.AllWindows = make(map[string]*wm2.Window)
+	wm2.ContextMenuHides = make([]js.Value, 0)
 
 	// Set default app for window
 	js.Global().Set("LaunchDefault", js.FuncOf(LaunchDefault))
 	// Essential for context menu's "New"
 
 	// Window manager core
-	wm.InitializeContextMenu()
-	wm.InitializeGlobalMouseEvents()
+	wm2.InitializeContextMenu()
+	wm2.InitializeGlobalMouseEvents()
 
 	<-c
 }

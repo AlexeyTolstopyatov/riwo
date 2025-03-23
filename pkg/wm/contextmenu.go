@@ -9,8 +9,10 @@ import (
 	"syscall/js"
 )
 
-// InitializeContextMenu creates and sets up the global context menu.
-// It adds both default options and (if available) custom entries from the current window.
+// InitializeContextMenu
+// creates and sets up the global context menu.
+// It adds both default options and (if available)
+// custom entries from the current window.
 func InitializeContextMenu() {
 	document := js.Global().Get("document")
 	body := document.Get("body")

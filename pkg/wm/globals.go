@@ -10,6 +10,7 @@ import (
 	"syscall/js"
 )
 
+// Structure overload.
 var (
 	ContextMenu      js.Value
 	ContextMenuHides []js.Value
@@ -21,7 +22,8 @@ var (
 	IsDeleteMode     bool
 	IsNewMode        bool
 	IsHiding         bool
-	StartX, StartY   float64
+	StartY           float64
+	StartX           float64
 	CurrentWindow    *Window            // Active Go Window
 	ActiveWindow     js.Value           // Active JS window
 	AllWindows       map[string]*Window // All Go Windows
